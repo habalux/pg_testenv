@@ -189,7 +189,7 @@ if __name__ == "__main__":
 
 	parser_start = subparsers.add_parser('start',description="Start server")
 	parser_start.set_defaults(action="start")
-	parser_start.add_argument('--port')
+	parser_start.add_argument('--port', default=None)
 
 	parser_stop = subparsers.add_parser('stop',description="Stop server")
 	parser_stop.set_defaults(action="stop")
@@ -212,7 +212,7 @@ if __name__ == "__main__":
 	if args.action == 'initdb':
 		pg.initdb(args.version, port=args.port, superuser=args.superuser)
 	elif args.action == 'start':
-		pg.start()
+		pg.start(args.port)
 	elif args.action == 'stop':
 		pg.stop()
 	elif args.action == 'info':
