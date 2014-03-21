@@ -40,9 +40,6 @@ import shutil
 import argparse
 import commands
 
-import psycopg2
-
-
 class PgInstance(object):
 	def __init__(self, path, clean_on_delete=False):
 		self.config = {
@@ -162,6 +159,7 @@ class PgInstance(object):
 			shutil.rmtree(datadir)
 
 	def connect(self, *args, **kwargs):
+		import psycopg2
 		if not kwargs.has_key('user'):
 			kwargs['user'] = self.config['user']
 		kwargs['host'] = self.config['path']
