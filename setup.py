@@ -7,6 +7,7 @@ setup(
 	author_email="teemu.haapoja@gmail.com",
 	description="PostgreSQL test instance creator",
 	license="BSD",
+	install_requires=['psycopg2'],
 	scripts = [
 		'pg_testenv'
 	],
