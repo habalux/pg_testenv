@@ -163,7 +163,8 @@ class PgInstance(object):
 		if not kwargs.has_key('user'):
 			kwargs['user'] = self.config['user']
 		kwargs['host'] = self.config['path']
-		kwargs['port'] = self.config['port']
+		if not kwargs.has_key('port'):
+			kwargs['port'] = self.config['port']
 		return psycopg2.connect(*args, **kwargs)
 
 	def test_connection(self, *args, **kwargs):
@@ -193,11 +194,12 @@ if __name__ == "__main__":
 	parser_stop.set_defaults(action="stop")
 
 	parser_stop = subparsers.add_parser('info',description="Show information")
-	parser_stop.set_defaults(action="info")
+	parser_stop.set_defaults(action="info")	
 
 	parser_connect = subparsers.add_parser('test',description="Test a connection to the database")
 	parser_connect.set_defaults(action="test")
 	parser_connect.add_argument('--user', default=None)
+	parser_connect.add_argument('--port', default="5432")
 
 	parser_clean = subparsers.add_parser('clean',description="Clean data files")
 	parser_clean.set_defaults(action="clean")
@@ -216,6 +218,6 @@ if __name__ == "__main__":
 	elif args.action == 'info':
 		print pg.info()
 	elif args.action == 'test':
-		print pg.test_connection(user=args.user)
+		print pg.test_connection(user=args.user,port=args.port)
 	elif args.action == 'clean':
 		pg.clean(confirm=True)
