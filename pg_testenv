@@ -62,6 +62,10 @@ if __name__ == "__main__":
 	parser_connect.add_argument('--user', default=None)
 	parser_connect.add_argument('--port', default="5432")
 
+	parser_connect = subparsers.add_parser('psql',description="Run an interactive psql shell on the instance")
+	parser_connect.set_defaults(action="psql")
+	parser_connect.add_argument('--database', default="postgres")
+
 	parser_clean = subparsers.add_parser('clean',description="Clean data files")
 	parser_clean.set_defaults(action="clean")
 
@@ -80,5 +84,9 @@ if __name__ == "__main__":
 		print pg.info()
 	elif args.action == 'test':
 		print pg.test_connection(user=args.user,port=args.port)
+	elif args.action == 'psql':
+		import subprocess
+		cmd = " ".join(pg.get_psql_args(database=args.database))
+		subprocess.call(cmd, shell=True)
 	elif args.action == 'clean':
 		pg.clean(confirm=True)
