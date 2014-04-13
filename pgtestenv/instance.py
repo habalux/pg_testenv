@@ -144,8 +144,8 @@ class PgInstance(object):
 		self.is_initialized(True)
 		return [
 			"psql",
-			"-h %s"%(self.config['path']),
-			"-p %s"%(self.config['port']),
-			"-U %s"%(self.config['superuser']),
-			"%s"%(database)
+			"-h", self.config['path'],
+			"-p", self.config['port'],
+			"-U", self.config['superuser'],
+			database
 			]
